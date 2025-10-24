@@ -150,6 +150,7 @@ That's it! All other dependencies are containerized.
 
 3. **Access the application**
    - **Backend API:** http://localhost:8080/api
+   - **PHP my Admin Database (tododb):** http://localhost:8081/
    - **Health Check:** http://localhost:8080/api/health
 
 4. **Stop the application**
@@ -202,3 +203,169 @@ That's it! All other dependencies are containerized.
    # Open: backend/target/site/jacoco/index.html
    ```
 
+## 📡 API Documentation
+
+### 💡 Tip: A ready-to-use Postman collection is available in the /postman folder. You can import it into Postman or the VS Code Postman extension to test all API endpoints easily.
+
+### Base URL
+```
+http://localhost:8080/api
+```
+
+### Endpoints
+
+#### Health Check
+```http
+GET /api/health
+```
+**Response:**
+```json
+{
+  "status": "UP",
+  "service": "todo-backend"
+}
+```
+
+#### Get Recent Tasks
+```http
+GET /api/tasks
+```
+**Description:** Returns the 5 most recent incomplete tasks
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Tasks retrieved successfully",
+  "data": [
+    {
+      "id": 1,
+      "title": "Buy books",
+      "description": "Buy books for the next school year",
+      "completed": false,
+      "createdAt": "2024-01-01T10:00:00",
+      "updatedAt": "2024-01-01T10:00:00"
+    }
+  ]
+}
+```
+
+#### Get Task by ID
+```http
+GET /api/tasks/{id}
+```
+**Parameters:**
+- `id` (path) - Task ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Task retrieved successfully",
+  "data": {
+    "id": 1,
+    "title": "Buy books",
+    "description": "Buy books for the next school year",
+    "completed": false,
+    "createdAt": "2024-01-01T10:00:00",
+    "updatedAt": "2024-01-01T10:00:00"
+  }
+}
+```
+
+#### Create Task
+```http
+POST /api/tasks
+Content-Type: application/json
+```
+**Request Body:**
+```json
+{
+  "title": "New Task",
+  "description": "Task description"
+}
+```
+
+**Response:** `201 Created`
+```json
+{
+  "success": true,
+  "message": "Task created successfully",
+  "data": {
+    "id": 6,
+    "title": "New Task",
+    "description": "Task description",
+    "completed": false,
+    "createdAt": "2024-01-01T12:00:00",
+    "updatedAt": "2024-01-01T12:00:00"
+  }
+}
+```
+
+#### Mark Task as Completed
+```http
+PUT /api/tasks/{id}/complete
+```
+**Parameters:**
+- `id` (path) - Task ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Task marked as completed",
+  "data": {
+    "id": 1,
+    "title": "Buy books",
+    "description": "Buy books for the next school year",
+    "completed": true,
+    "createdAt": "2024-01-01T10:00:00",
+    "updatedAt": "2024-01-01T12:30:00"
+  }
+}
+```
+
+#### Delete Task
+```http
+DELETE /api/tasks/{id}
+```
+**Parameters:**
+- `id` (path) - Task ID
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Task deleted successfully",
+  "data": null
+}
+```
+
+### Error Responses
+
+**400 Bad Request** - Validation error
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "data": null
+}
+```
+
+**404 Not Found** - Resource not found
+```json
+{
+  "success": false,
+  "message": "Task not found with id: 999",
+  "data": null
+}
+```
+
+**500 Internal Server Error**
+```json
+{
+  "success": false,
+  "message": "An unexpected error occurred",
+  "data": null
+}
+```
