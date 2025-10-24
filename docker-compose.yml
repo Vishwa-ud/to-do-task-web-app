@@ -1,0 +1,30 @@
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: todo-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tododb
+      MYSQL_USER: todouser
+      MYSQL_PASSWORD: todopassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - todo-network
+      
+networks:
+  todo-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
