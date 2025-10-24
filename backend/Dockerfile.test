@@ -1,0 +1,15 @@
+# Backend Test Dockerfile
+# This Dockerfile is specifically for running tests in a container
+
+FROM maven:3.9.5-eclipse-temurin-17
+WORKDIR /app
+
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Default command runs tests
+CMD ["mvn", "test"]
