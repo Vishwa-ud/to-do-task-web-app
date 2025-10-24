@@ -1,2 +1,204 @@
 # to-do-task-web-app
 build a small to-do task web application.
+# 📝 To-Do Task Web Application
+
+A modern, full-stack to-do task management application built with React, Spring Boot, and MySQL. This project demonstrates clean code principles, SOLID design, comprehensive testing, and containerized deployment.
+
+## 🎯 Features
+
+- ✅ Create to-do tasks with title and description
+- ✅ View the 5 most recent incomplete tasks
+- ✅ Mark tasks as completed (removes them from view)
+- ✅ Clean, modern, and responsive UI
+- ✅ RESTful API design
+- ✅ Comprehensive test coverage (unit, integration, E2E)
+- ✅ Fully containerized with Docker
+- ✅ Health checks for all services
+- ✅ Production-ready architecture
+
+## 🧱 Tech Stack
+
+### Frontend
+- **React 18** - Modern UI library
+- **Vite** - Lightning-fast build tool
+- **Tailwind CSS** - Utility-first CSS framework
+- **Axios** - HTTP client
+- **Vitest** - Unit testing framework
+- **React Testing Library** - Component testing
+
+### Backend
+- **Spring Boot 3.2** - Enterprise Java framework
+- **Spring Data JPA** - Data access layer
+- **Hibernate** - ORM framework
+- **Maven** - Dependency management
+- **JUnit 5** - Unit testing
+- **Mockito** - Mocking framework
+- **RestAssured** - API testing
+- **JaCoCo** - Code coverage
+
+### Database
+- **MySQL 8.0** - Relational database
+
+### DevOps
+- **Docker** - Containerization
+- **Docker Compose** - Multi-container orchestration
+- **Playwright** - E2E testing
+
+## 🏗️ System Architecture
+
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│             │         │             │         │             │
+│   Browser   │───────▶│  Frontend    │───────▶│  Spring     │
+│             │         │             │         │   Boot      │
+└─────────────┘         └─────────────┘         │  (Backend)  │
+                              │                 └──────┬──────┘
+                              │                        │
+                              │                        │
+                              ▼                        ▼
+                        ┌──────────┐           ┌─────────────┐
+                        │  Static  │           │    MySQL    │
+                        │  Assets  │           │  Database   │
+                        └──────────┘           └─────────────┘
+```
+
+
+## 📁 Project Structure
+
+```
+to-do-task-web-app/
+├── backend/                    # Spring Boot backend
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/todo/
+│   │   │   │   ├── controller/     # REST controllers
+│   │   │   │   ├── dto/            # Data Transfer Objects
+│   │   │   │   ├── exception/      # Exception handling
+│   │   │   │   ├── model/          # JPA entities
+│   │   │   │   ├── repository/     # Data repositories
+│   │   │   │   ├── service/        # Business logic
+│   │   │   │   └── TodoBackendApplication.java
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   │   └── test/                   # Unit & integration tests
+│   ├── Dockerfile
+│   └── pom.xml
+├── docker-compose.yml
+├── .gitignore
+├── .dockerignore
+└── README.md
+```
+
+## 🗄️ Database Design
+
+### Task Table Schema
+
+```sql
+CREATE TABLE task (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_completed (completed),
+    INDEX idx_created_at (created_at)
+);
+```
+
+**Columns:**
+- `id` - Primary key, auto-incremented
+- `title` - Task title (required, max 255 chars)
+- `description` - Task description (optional, text)
+- `completed` - Task completion status (default: false)
+- `created_at` - Timestamp of task creation
+- `updated_at` - Timestamp of last update
+
+**Indexes:**
+- `idx_completed` - Optimizes queries filtering by completion status
+- `idx_created_at` - Optimizes sorting by creation date
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Docker** - Version 20.10 or higher
+- **Docker Compose** - Version 2.0 or higher
+- **Git** - For cloning the repository
+
+That's it! All other dependencies are containerized.
+
+### Quick Start (Docker - Recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Vishwa-ud/to-do-task-web-app.git
+   cd to-do-task-web-app
+   ```
+
+2. **Start all services**
+   ```bash
+   docker-compose up --build
+   ```
+
+   This will:
+   - Build the backend Spring Boot application
+   - Build the frontend React application
+   - Start MySQL database
+   - Initialize the database with sample data
+   - Start all services with health checks
+
+3. **Access the application**
+   - **Backend API:** http://localhost:8080/api
+   - **Health Check:** http://localhost:8080/api/health
+
+4. **Stop the application**
+   ```bash
+   docker-compose down
+   ```
+
+5. **Clean up (including database)**
+   ```bash
+   docker-compose down -v
+   ```
+
+### Local Development Setup
+
+#### Backend (Spring Boot)
+
+**Steps:**
+
+1. **Configure database**
+   ```bash
+   # Create database
+   mysql -u root -p
+   CREATE DATABASE tododb;
+   CREATE USER 'todouser'@'localhost' IDENTIFIED BY 'todopassword';
+   GRANT ALL PRIVILEGES ON tododb.* TO 'todouser'@'localhost';
+   FLUSH PRIVILEGES;
+   
+   # Run init script
+   mysql -u todouser -p tododb < database/init.sql
+   ```
+
+2. **Build and run backend**
+   ```bash
+   cd backend
+   mvn clean install
+   mvn spring-boot:run
+   ```
+
+3. **Run backend tests**
+   ```bash
+   cd backend
+   
+   # Run all tests
+   mvn test
+   
+   # Run tests with coverage
+   mvn clean test jacoco:report
+   
+   # View coverage report
+   # Open: backend/target/site/jacoco/index.html
+   ```
+
