@@ -10,6 +10,12 @@ backend/.classpath
 backend/.project
 backend/bin/
 
+
+# Frontend (React + Vite)
+frontend/node_modules/
+frontend/dist/
+package-lock.json
+
 # Testing
 backend/coverage/
 test-results/
