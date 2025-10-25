@@ -14,6 +14,7 @@ backend/bin/
 # Frontend (React + Vite)
 frontend/node_modules/
 frontend/dist/
+frontend/coverage/
 package-lock.json
 
 # Testing
