@@ -449,3 +449,30 @@ mvn test -Dtest=TaskServiceTest
 - Line Coverage: > 80%
 - Branch Coverage: > 75%
 - Class Coverage: > 90%
+
+---
+
+### Frontend Tests (Requires Node.js)
+
+**Install dependencies:**
+```bash
+cd frontend
+npm install
+```
+
+**Run tests:**
+```bash
+npm test
+```
+
+**Run tests in watch mode:**
+```bash
+npm test -- --watch
+```
+
+**Generate coverage report:**
+```bash
+npm test -- --coverage
+```
+
+---
