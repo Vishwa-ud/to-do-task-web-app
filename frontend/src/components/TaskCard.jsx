@@ -27,25 +27,25 @@ const TaskCard = ({ task, onComplete, onDelete }) => {
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg p-4 mb-3 fade-in hover:shadow-md transition-shadow duration-200 relative">
+    <div className="bg-white bg-opacity-30 backdrop-blur-sm rounded-lg p-4 mb-3 fade-in hover:bg-opacity-40 transition-all duration-200 relative border border-white border-opacity-30 shadow-md">
       <button
         onClick={handleDelete}
-        className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition duration-200"
+        className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-white text-opacity-80 hover:text-red-400 hover:bg-red-500 hover:bg-opacity-30 rounded-full transition duration-200"
         title="Delete task"
       >
         ✕
       </button>
       <div className="flex justify-between items-start pr-8">
         <div className="flex-1">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">{task.title}</h3>
-          <p className="text-gray-600 text-sm mb-2">{task.description}</p>
-          <p className="text-xs text-gray-500">
+          <h3 className="text-lg font-bold text-gray-900 mb-1 drop-shadow-md">{task.title}</h3>
+          <p className="text-gray-700 text-opacity-95 text-sm mb-2 drop-shadow">{task.description}</p>
+          <p className="text-xs text-gray-700 text-opacity-80 drop-shadow">
             Created: {formatDate(task.createdAt)}
           </p>
         </div>
         <button
           onClick={handleComplete}
-          className="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition duration-200 text-sm font-medium"
+          className="px-4 py-2 bg-white bg-opacity-95 hover:bg-opacity-100 text-blue-700 rounded-md transition duration-200 text-sm font-semibold shadow-lg hover:shadow-xl"
         >
           Done
         </button>

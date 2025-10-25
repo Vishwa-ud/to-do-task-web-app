@@ -30,11 +30,11 @@ const TaskForm = ({ onTaskCreated }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-xl p-6 mb-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Add a Task</h2>
+    <div className="glass-effect rounded-xl shadow-xl p-6 mb-6">
+      <h2 className="text-2xl font-bold text-white mb-4 drop-shadow">Add a Task</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="title" className="block text-sm font-medium text-white mb-2 drop-shadow">
             Title
           </label>
           <input
@@ -42,7 +42,7 @@ const TaskForm = ({ onTaskCreated }) => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+            className="w-full px-4 py-2 bg-white bg-opacity-95 border border-white border-opacity-40 rounded-lg focus:ring-2 focus:ring-white focus:ring-opacity-60 focus:border-transparent outline-none transition shadow-sm"
             placeholder="Enter task title"
             maxLength={255}
             disabled={isSubmitting}
@@ -50,14 +50,14 @@ const TaskForm = ({ onTaskCreated }) => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="description" className="block text-sm font-medium text-white mb-2 drop-shadow">
             Description
           </label>
           <textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition resize-none"
+            className="w-full px-4 py-2 bg-white bg-opacity-95 border border-white border-opacity-40 rounded-lg focus:ring-2 focus:ring-white focus:ring-opacity-60 focus:border-transparent outline-none transition resize-none shadow-sm"
             placeholder="Enter task description"
             rows={3}
             disabled={isSubmitting}
@@ -73,7 +73,7 @@ const TaskForm = ({ onTaskCreated }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-white bg-opacity-95 hover:bg-opacity-100 text-blue-700 font-bold py-3 px-6 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
         >
           {isSubmitting ? 'Adding...' : 'Add'}
         </button>

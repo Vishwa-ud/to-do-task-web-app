@@ -54,11 +54,13 @@ function App() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
-            To-Do Task Manager
+          <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-3 drop-shadow-lg tracking-tight">
+            <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+              To-Do Task Manager
+            </span>
           </h1>
-          <p className="text-white text-opacity-90">
-            Organize your tasks efficiently
+          <p className="text-xl text-white drop-shadow-md font-medium">
+            ✨ Organize your tasks efficiently ✨
           </p>
         </div>
 
@@ -82,7 +84,7 @@ function App() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-white text-opacity-75 text-sm">
+        <div className="text-center mt-8 text-xl text-xl text-white drop-shadow-md font-medium">
           <p>Showing only the most recent 5 incomplete tasks</p>
         </div>
       </div>
