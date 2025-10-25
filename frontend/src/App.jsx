@@ -83,10 +83,23 @@ function App() {
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Note */}
         <div className="text-center mt-8 text-xl text-xl text-white drop-shadow-md font-medium">
           <p>Showing only the most recent 5 incomplete tasks</p>
         </div>
+
+        {/* Footer - fixed glass effect */}
+        <footer className="fixed inset-x-0 bottom-0 z-50">
+          <div className="backdrop-blur-md bg-white/10 border-t border-white/20 shadow-inner">
+            <div className="max-w-6xl mx-auto py-3 px-4">
+              <p className="text-center text-sm text-white font-medium">
+                © 2025 <span className="font-semibold">Vishwa Udaynatha</span>. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
+
+
       </div>
     </div>
   );
