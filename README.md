@@ -167,6 +167,11 @@ That's it! All other dependencies are containerized.
 
 #### Backend (Spring Boot)
 
+**Prerequisites:**
+- Java 17 
+- Maven 3.9.11 # https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.zip
+- MySQL 8.0 running in docker
+
 **Steps:**
 
 1. **Configure database**
@@ -186,6 +191,8 @@ That's it! All other dependencies are containerized.
    ```bash
    cd backend
    mvn clean install
+   # run Only mysql in docker
+   docker-compose up -d db 
    mvn spring-boot:run
    ```
 
@@ -369,3 +376,103 @@ DELETE /api/tasks/{id}
   "data": null
 }
 ```
+
+## 🧪 Testing
+
+### Quick Test (Docker - Recommended)
+
+**Run all tests in Docker containers:**
+```bash
+# Backend tests (build test container first)
+docker build -f backend/Dockerfile.test -t todo-backend-test backend
+docker run --rm todo-backend-test
+
+```
+
+**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
+
+---
+
+### Backend Testing
+
+The backend includes comprehensive test coverage:
+
+#### Unit Tests
+- **Repository Tests** - Test data access layer
+- **Service Tests** - Test business logic with mocked dependencies
+- **Controller Tests** - Test REST endpoints with mocked services
+
+#### Integration Tests
+- **API Integration Tests** - Test complete API workflows with real database
+
+**Run tests in Docker (recommended):**
+```bash
+# Build test container and run tests
+docker build -f backend/Dockerfile.test -t todo-backend-test backend
+docker run --rm todo-backend-test
+
+# Generate coverage report (extract from container)
+docker run --rm -v ${PWD}/backend:/output todo-backend-test sh -c "mvn test jacoco:report && cp -r target/site/jacoco /output/"
+```
+
+**Run tests locally (requires Maven + JDK 17):**
+
+**Prerequisites:** Make sure Backend is running
+
+```bash
+   cd backend
+   mvn clean install
+   # run Only mysql in docker
+   docker-compose up -d db 
+   mvn spring-boot:run
+   ```
+
+```bash
+cd backend
+mvn test
+mvn jacoco:report  # Generate coverage report
+```
+# Run tests individually,
+
+```
+# TaskControllerTest
+mvn test -Dtest=TaskControllerTest
+# TaskApiIntegrationTest
+mvn test -Dtest=TaskApiIntegrationTest
+# TaskRepositoryTest
+mvn test -Dtest=TaskRepositoryTest
+# TaskServiceTest
+mvn test -Dtest=TaskServiceTest
+```
+
+**Coverage Goals:**
+- Line Coverage: > 80%
+- Branch Coverage: > 75%
+- Class Coverage: > 90%
+
+---
+
+### Frontend Tests (Requires Node.js)
+
+**Install dependencies:**
+```bash
+cd frontend
+npm install
+```
+
+**Run tests:**
+```bash
+npm test
+```
+
+**Run tests in watch mode:**
+```bash
+npm test -- --watch
+```
+
+**Generate coverage report:**
+```bash
+npm test -- --coverage
+```
+
+---
