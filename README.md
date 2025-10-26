@@ -1,5 +1,3 @@
-
-https://github.com/user-attachments/assets/9260ca35-989f-45df-a5f9-f7daa5147013
 # 📝 To-Do Task Web Application
 
 A modern, full-stack to-do task management application built with React, Spring Boot, and MySQL. This project demonstrates clean code principles, SOLID design, comprehensive testing, and containerized deployment.
