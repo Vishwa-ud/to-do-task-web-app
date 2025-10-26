@@ -1,5 +1,3 @@
-# to-do-task-web-app
-build a small to-do task web application.
 # 📝 To-Do Task Web Application
 
 A modern, full-stack to-do task management application built with React, Spring Boot, and MySQL. This project demonstrates clean code principles, SOLID design, comprehensive testing, and containerized deployment.
@@ -47,19 +45,26 @@ A modern, full-stack to-do task management application built with React, Spring 
 1. **Backend**
 
 **Run all tests in Docker containers:**
-```bash
-# Backend tests (build test container first)
-docker build -f backend/Dockerfile.test -t todo-backend-test backend
-docker run --rm todo-backend-test
-```
+  ```bash
+  # Backend tests (build test container first)
+  docker build -f backend/Dockerfile.test -t todo-backend-test backend
+  docker run --rm todo-backend-test
+  ```
 
 2. **frontend**
 **Run all tests in Docker containers:**
 
 **Run tests in Docker (recommended):**
-```bash
-docker-compose exec frontend npm test -- --run
-```
+  ```bash
+  docker-compose exec frontend npm test -- --run
+  ```
+2. **e2e**
+  **Run Selenium automated e2e tests** (requires local Node.js)
+  ```bash
+  cd e2e
+  npm install
+  npm test
+  ```
 ---
 
 ## 🎯 Features
@@ -166,6 +171,10 @@ to-do-task-web-app/
 │   ├── tests/
 │   │   └── todo.test.js
 │   └── package.json
+├── docker-compose.yml
+├── .gitignore
+├── .dockerignore
+└── README.md
 ```
 
 ## 🗄️ Database Design
@@ -421,6 +430,23 @@ DELETE /api/tasks/{id}
 }
 ```
 
+#### Frontend (React + Vite)
+
+**Steps:**
+
+1. **Install dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. **Start development server**
+   ```bash
+   npm run dev
+   ```
+   Access at: http://localhost:5173
+
+
 ---
 
 ## 🧪 Testing
@@ -652,3 +678,66 @@ docker-compose down
 docker system prune -a
 docker-compose up --build
 ```
+---
+
+## 🎨 UI Features
+
+- **Gradient Background** - Modern purple gradient
+- **Responsive Design** - Works on all screen sizes
+- **Animations** - Smooth fade-in effects
+- **Loading States** - Spinner during data fetch
+- **Error Handling** - User-friendly error messages
+- **Empty States** - Helpful messages when no tasks
+- **Form Validation** - Client-side validation
+- **Accessibility** - Proper labels and semantic HTML
+
+## 📋 Design Principles
+
+### SOLID Principles
+
+✅ **Single Responsibility** - Each class has one reason to change
+- Controllers handle HTTP requests
+- Services contain business logic
+- Repositories manage data access
+
+✅ **Open/Closed** - Open for extension, closed for modification
+- Use of interfaces and abstract classes
+- Strategy pattern for extensibility
+
+✅ **Liskov Substitution** - Subtypes are substitutable
+- Proper use of inheritance
+- Interface-based design
+
+✅ **Interface Segregation** - Specific interfaces
+- Focused repository interfaces
+- DTOs for data transfer
+
+✅ **Dependency Inversion** - Depend on abstractions
+- Constructor injection
+- Repository pattern
+
+### Clean Code Principles
+
+- **Meaningful Names** - Descriptive variable and method names
+- **Small Functions** - Single-purpose methods
+- **DRY** - Don't Repeat Yourself
+- **Comments** - Where needed, code is self-documenting
+- **Error Handling** - Proper exception handling
+- **Formatting** - Consistent code style
+- **Testing** - Comprehensive test coverage
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+**Vishwa Udayanga**
+- GitHub: [@Vishwa-ud](https://github.com/Vishwa-ud)
+
+---
+
+**Built with ❤️ using modern technologies and best practices**
+build a small to-do task web application.
