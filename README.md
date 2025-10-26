@@ -10,7 +10,7 @@ A modern, full-stack to-do task management application built with React, Spring 
 
 ## 🏗️  Overall system architecture
 
-![System Diagram](https://github.com/user-attachments/assets/b0160557-34bf-41ba-ba33-0015d68f7880)
+<img src="https://github.com/user-attachments/assets/b0160557-34bf-41ba-ba33-0015d68f7880" alt="System Diagram" width="100%">
 
 
 <img width="2559" height="1599" alt="Screenshot 2025-10-26 222615" src="https://github.com/user-attachments/assets/a6382f54-397b-408f-bb56-e3f573eadee9" />
