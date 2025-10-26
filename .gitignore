@@ -20,6 +20,7 @@ package-lock.json
 # Testing
 backend/coverage/
 test-results/
+e2e/node_modules/
 
 # IDE
 .vscode/

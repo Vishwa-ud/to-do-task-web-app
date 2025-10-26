@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Test results
+
+# Mocha reports
+mochawesome-report/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Old Playwright files (deprecated)
+playwright.config.js.old
+tests/todo.spec.js

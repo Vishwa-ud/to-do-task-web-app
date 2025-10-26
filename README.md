@@ -4,6 +4,64 @@ build a small to-do task web application.
 
 A modern, full-stack to-do task management application built with React, Spring Boot, and MySQL. This project demonstrates clean code principles, SOLID design, comprehensive testing, and containerized deployment.
 
+
+### Quick Start (Docker - Recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Vishwa-ud/to-do-task-web-app.git
+   cd to-do-task-web-app
+   ```
+
+2. **Start all services**
+   ```bash
+   docker-compose up --build
+   ```
+
+   This will:
+   - Build the backend Spring Boot application
+   - Build the frontend React application
+   - Start MySQL database
+   - Initialize the database with sample data
+   - Start all services with health checks
+
+3. **Access the application**
+   - **Backend API:** http://localhost:8080/api
+   - **PHP my Admin Database (tododb):** http://localhost:8081/
+   - **Health Check:** http://localhost:8080/api/health
+
+4. **Stop the application**
+   ```bash
+   docker-compose down
+   ```
+
+5. **Clean up (including database)**
+   ```bash
+   docker-compose down -v
+   ```
+
+### Quick Test (Docker - Recommended)
+
+**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
+
+1. **Backend**
+
+**Run all tests in Docker containers:**
+```bash
+# Backend tests (build test container first)
+docker build -f backend/Dockerfile.test -t todo-backend-test backend
+docker run --rm todo-backend-test
+```
+
+2. **frontend**
+**Run all tests in Docker containers:**
+
+**Run tests in Docker (recommended):**
+```bash
+docker-compose exec frontend npm test -- --run
+```
+---
+
 ## 🎯 Features
 
 - ✅ Create to-do tasks with title and description
@@ -42,7 +100,9 @@ A modern, full-stack to-do task management application built with React, Spring 
 ### DevOps
 - **Docker** - Containerization
 - **Docker Compose** - Multi-container orchestration
-- **Playwright** - E2E testing
+- **Selenium WebDriver** - E2E testing
+- **Mocha** - Test framework
+- **Chai** - Assertion library
 
 ## 🏗️ System Architecture
 
@@ -83,10 +143,29 @@ to-do-task-web-app/
 │   │   └── test/                   # Unit & integration tests
 │   ├── Dockerfile
 │   └── pom.xml
-├── docker-compose.yml
-├── .gitignore
-├── .dockerignore
-└── README.md
+├── frontend/                   # React frontend
+│   ├── src/
+│   │   ├── components/         # React components
+│   │   │   ├── TaskCard.jsx
+│   │   │   ├── TaskForm.jsx
+│   │   │   └── TaskList.jsx
+│   │   ├── services/           # API services
+│   │   │   └── api.js
+│   │   ├── test/               # Component tests
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── vitest.config.js
+│   └── tailwind.config.js
+├── database/                   # Database scripts
+│   └── init.sql
+├── e2e/                        # End-to-end tests
+│   ├── tests/
+│   │   └── todo.test.js
+│   └── package.json
 ```
 
 ## 🗄️ Database Design
@@ -127,41 +206,6 @@ CREATE TABLE task (
 - **Git** - For cloning the repository
 
 That's it! All other dependencies are containerized.
-
-### Quick Start (Docker - Recommended)
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Vishwa-ud/to-do-task-web-app.git
-   cd to-do-task-web-app
-   ```
-
-2. **Start all services**
-   ```bash
-   docker-compose up --build
-   ```
-
-   This will:
-   - Build the backend Spring Boot application
-   - Build the frontend React application
-   - Start MySQL database
-   - Initialize the database with sample data
-   - Start all services with health checks
-
-3. **Access the application**
-   - **Backend API:** http://localhost:8080/api
-   - **PHP my Admin Database (tododb):** http://localhost:8081/
-   - **Health Check:** http://localhost:8080/api/health
-
-4. **Stop the application**
-   ```bash
-   docker-compose down
-   ```
-
-5. **Clean up (including database)**
-   ```bash
-   docker-compose down -v
-   ```
 
 ### Local Development Setup
 
@@ -377,21 +421,9 @@ DELETE /api/tasks/{id}
 }
 ```
 
-## 🧪 Testing
-
-### Quick Test (Docker - Recommended)
-
-**Run all tests in Docker containers:**
-```bash
-# Backend tests (build test container first)
-docker build -f backend/Dockerfile.test -t todo-backend-test backend
-docker run --rm todo-backend-test
-
-```
-
-**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
-
 ---
+
+## 🧪 Testing
 
 ### Backend Testing
 
@@ -406,6 +438,9 @@ The backend includes comprehensive test coverage:
 - **API Integration Tests** - Test complete API workflows with real database
 
 **Run tests in Docker (recommended):**
+
+**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
+
 ```bash
 # Build test container and run tests
 docker build -f backend/Dockerfile.test -t todo-backend-test backend
@@ -452,7 +487,14 @@ mvn test -Dtest=TaskServiceTest
 
 ---
 
-### Frontend Tests (Requires Node.js)
+### Frontend Tests (Docker)
+
+**Run tests in Docker (recommended):**
+```bash
+docker-compose exec frontend npm test -- --run
+```
+
+### Frontend Tests (Locally)
 
 **Install dependencies:**
 ```bash
@@ -469,10 +511,144 @@ npm test
 ```bash
 npm test -- --watch
 ```
+---
 
-**Generate coverage report:**
-```bash
-npm test -- --coverage
+### End-to-End Testing
+
+E2E tests cover complete user workflows using Selenium WebDriver:
+
+- Task creation
+- Task completion
+- Form validation
+- Empty states
+- Multi-task scenarios
+- 5-task limit validation
+
+**Run E2E tests:**
+
+1. **Start the application** (if not already running)
+   ```bash
+   docker-compose up -d
+   ```
+
+2. **Run Selenium tests** (requires local Node.js)
+   ```bash
+   cd e2e
+   npm install
+   npm test
+   ```
+
+3. **Run in different browsers**
+   ```bash
+   # Chrome (default)
+   npm run test:chrome
+   
+   # Firefox
+   npm run test:firefox
+   
+   # Edge
+   npm run test:edge
+   
+   # Headless mode
+   npm run test:headless
+   ```
+
+**Note:** Selenium WebDriver automatically manages browser drivers. No manual driver installation required!
+
+
+## 🎯 Test Cases
+
+All 8 original tests:
+
+1. ✅ Display application title
+2. ✅ Create a new task
+3. ✅ Show validation error when title is empty
+4. ✅ Mark a task as completed
+5. ✅ Display empty state when no tasks exist
+6. ✅ Create multiple tasks and display them
+7. ✅ Clear form after successful task creation
+8. ✅ Respect the 5 task limit
+
+## 📊 Expected Output
+
+```
+To-Do Task Application E2E Tests
+    8 passing (10s)
+
+✔ should display the application title
+✔ should create a new task
+✔ should show validation error when title is empty
+✔ should mark a task as completed
+✔ should display empty state when no tasks exist
+✔ should create multiple tasks and display them
+✔ should clear form after successful task creation
+✔ should respect the 5 task limit
+
+  8 passing (19s)
 ```
 
----
+### Docker Commands
+
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Start in detached mode
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# View logs for specific service
+docker-compose logs -f backend
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v
+
+# Rebuild specific service
+docker-compose up --build backend
+```
+
+## 🚦 Health Checks
+
+All services include health checks:
+
+**Backend:**
+```bash
+curl http://localhost:8080/api/health
+```
+
+**Frontend:**
+```bash
+curl http://localhost:5173/
+```
+
+**Database:**
+```bash
+docker-compose exec db mysqladmin ping -h localhost -u root -prootpassword
+```
+
+
+## 🔧 Troubleshooting
+
+### Port Conflicts
+
+If ports are already in use, modify `docker-compose.yml`:
+```yaml
+ports:
+  - "8081:8080"  # Backend
+  - "3307:3306"  # Database
+  - "5173:5173"    # Frontend
+```
+
+### Build Failures
+
+Clean Docker cache:
+```bash
+docker-compose down
+docker system prune -a
+docker-compose up --build
+```
