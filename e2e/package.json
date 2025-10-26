@@ -1,0 +1,19 @@
+{
+  "name": "e2e-tests",
+  "version": "1.0.0",
+  "description": "End-to-end tests for to-do app",
+  "scripts": {
+    "test": "mocha \"tests/todo.test.js\" --timeout 30000 --exit",
+    "test:chrome": "set BROWSER=chrome&& mocha \"tests/todo.test.js\" --timeout 30000 --exit",
+    "test:firefox": "set BROWSER=firefox&& mocha \"tests/todo.test.js\" --timeout 30000 --exit",
+    "test:edge": "set BROWSER=edge&& mocha \"tests/todo.test.js\" --timeout 30000 --exit",
+    "test:headless": "set HEADLESS=true&& mocha \"tests/todo.test.js\" --timeout 30000 --exit",
+    "test:report": "mocha \"tests/todo.test.js\" --timeout 30000 --reporter mochawesome --exit"
+  },
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.4",
+    "selenium-webdriver": "^4.16.0"
+  }
+}
