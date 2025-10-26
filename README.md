@@ -2,11 +2,16 @@
 
 A modern, full-stack to-do task management application built with React, Spring Boot, and MySQL. This project demonstrates clean code principles, SOLID design, comprehensive testing, and containerized deployment.
 
-![Architecture](https://img.shields.io/badge/Architecture-Microservices-blue)
+![Architecture](https://img.shields.io/badge/Architecture-3Tier-blue)
 ![Frontend](https://img.shields.io/badge/Frontend-React%2018-61dafb)
 ![Backend](https://img.shields.io/badge/Backend-Spring%20Boot%203.2-6db33f)
 ![Database](https://img.shields.io/badge/Database-MySQL%208.0-4479a1)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ed)
+
+## 🏗️  Overall system architecture
+
+![System Diagram](https://github.com/user-attachments/assets/b0160557-34bf-41ba-ba33-0015d68f7880)
+
 
 <img width="2559" height="1599" alt="Screenshot 2025-10-26 222615" src="https://github.com/user-attachments/assets/a6382f54-397b-408f-bb56-e3f573eadee9" />
 
