@@ -4,6 +4,64 @@ build a small to-do task web application.
 
 A modern, full-stack to-do task management application built with React, Spring Boot, and MySQL. This project demonstrates clean code principles, SOLID design, comprehensive testing, and containerized deployment.
 
+
+### Quick Start (Docker - Recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Vishwa-ud/to-do-task-web-app.git
+   cd to-do-task-web-app
+   ```
+
+2. **Start all services**
+   ```bash
+   docker-compose up --build
+   ```
+
+   This will:
+   - Build the backend Spring Boot application
+   - Build the frontend React application
+   - Start MySQL database
+   - Initialize the database with sample data
+   - Start all services with health checks
+
+3. **Access the application**
+   - **Backend API:** http://localhost:8080/api
+   - **PHP my Admin Database (tododb):** http://localhost:8081/
+   - **Health Check:** http://localhost:8080/api/health
+
+4. **Stop the application**
+   ```bash
+   docker-compose down
+   ```
+
+5. **Clean up (including database)**
+   ```bash
+   docker-compose down -v
+   ```
+
+### Quick Test (Docker - Recommended)
+
+**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
+
+1. **Backend**
+
+**Run all tests in Docker containers:**
+```bash
+# Backend tests (build test container first)
+docker build -f backend/Dockerfile.test -t todo-backend-test backend
+docker run --rm todo-backend-test
+```
+
+2. **frontend**
+**Run all tests in Docker containers:**
+
+**Run tests in Docker (recommended):**
+```bash
+docker-compose exec frontend npm test -- --run
+```
+---
+
 ## 🎯 Features
 
 - ✅ Create to-do tasks with title and description
@@ -85,10 +143,29 @@ to-do-task-web-app/
 │   │   └── test/                   # Unit & integration tests
 │   ├── Dockerfile
 │   └── pom.xml
-├── docker-compose.yml
-├── .gitignore
-├── .dockerignore
-└── README.md
+├── frontend/                   # React frontend
+│   ├── src/
+│   │   ├── components/         # React components
+│   │   │   ├── TaskCard.jsx
+│   │   │   ├── TaskForm.jsx
+│   │   │   └── TaskList.jsx
+│   │   ├── services/           # API services
+│   │   │   └── api.js
+│   │   ├── test/               # Component tests
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── vitest.config.js
+│   └── tailwind.config.js
+├── database/                   # Database scripts
+│   └── init.sql
+├── e2e/                        # End-to-end tests
+│   ├── tests/
+│   │   └── todo.test.js
+│   └── package.json
 ```
 
 ## 🗄️ Database Design
@@ -129,41 +206,6 @@ CREATE TABLE task (
 - **Git** - For cloning the repository
 
 That's it! All other dependencies are containerized.
-
-### Quick Start (Docker - Recommended)
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Vishwa-ud/to-do-task-web-app.git
-   cd to-do-task-web-app
-   ```
-
-2. **Start all services**
-   ```bash
-   docker-compose up --build
-   ```
-
-   This will:
-   - Build the backend Spring Boot application
-   - Build the frontend React application
-   - Start MySQL database
-   - Initialize the database with sample data
-   - Start all services with health checks
-
-3. **Access the application**
-   - **Backend API:** http://localhost:8080/api
-   - **PHP my Admin Database (tododb):** http://localhost:8081/
-   - **Health Check:** http://localhost:8080/api/health
-
-4. **Stop the application**
-   ```bash
-   docker-compose down
-   ```
-
-5. **Clean up (including database)**
-   ```bash
-   docker-compose down -v
-   ```
 
 ### Local Development Setup
 
@@ -379,21 +421,9 @@ DELETE /api/tasks/{id}
 }
 ```
 
-## 🧪 Testing
-
-### Quick Test (Docker - Recommended)
-
-**Run all tests in Docker containers:**
-```bash
-# Backend tests (build test container first)
-docker build -f backend/Dockerfile.test -t todo-backend-test backend
-docker run --rm todo-backend-test
-
-```
-
-**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
-
 ---
+
+## 🧪 Testing
 
 ### Backend Testing
 
@@ -408,6 +438,9 @@ The backend includes comprehensive test coverage:
 - **API Integration Tests** - Test complete API workflows with real database
 
 **Run tests in Docker (recommended):**
+
+**Prerequisites:** Make sure containers are running (`docker-compose up -d`)
+
 ```bash
 # Build test container and run tests
 docker build -f backend/Dockerfile.test -t todo-backend-test backend
@@ -460,7 +493,6 @@ mvn test -Dtest=TaskServiceTest
 ```bash
 docker-compose exec frontend npm test -- --run
 ```
-
 
 ### Frontend Tests (Locally)
 
