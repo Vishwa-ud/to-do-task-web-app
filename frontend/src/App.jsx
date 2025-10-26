@@ -28,29 +28,58 @@ function App() {
   }, []);
 
   const handleTaskCreated = async (taskData) => {
-    await createTask(taskData);
-    await fetchTasks();
+    try {
+      await createTask(taskData);
+      // Immediately refresh to show the new task
+      await fetchTasks();
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to create task');
+      console.error('Error creating task:', err);
+    }
   };
 
   const handleTaskComplete = async (taskId) => {
-    await completeTask(taskId);
-    // Remove the completed task from the list with animation
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    try {
+      // Optimistically remove from UI first for smooth UX
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+      
+      // Complete the task on server
+      await completeTask(taskId);
+      
+      // Fetch fresh data to show the next available task
+      setTimeout(async () => {
+        await fetchTasks();
+      }, 300); // Small delay for smooth transition
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to complete task');
+      console.error('Error completing task:', err);
+      // Revert on error
+      await fetchTasks();
+    }
   };
 
   const handleTaskDelete = async (taskId) => {
     try {
-      await deleteTask(taskId);
-      // Remove the deleted task from the list
+      // Optimistically remove from UI first for smooth UX
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+      
+      // Delete the task on server
+      await deleteTask(taskId);
+      
+      // Fetch fresh data to show the next available task
+      setTimeout(async () => {
+        await fetchTasks();
+      }, 300); // Small delay for smooth transition
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to delete task');
       console.error('Error deleting task:', err);
+      // Revert on error
+      await fetchTasks();
     }
   };
 
   return (
-    <div className="min-h-screen py-8 px-4">
+    <div className="min-h-screen px-4 pt-1">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -60,7 +89,7 @@ function App() {
             </span>
           </h1>
           <p className="text-xl text-white drop-shadow-md font-medium">
-            ✨ Organize your tasks efficiently ✨
+            Organize your tasks efficiently
           </p>
         </div>
 
@@ -83,10 +112,10 @@ function App() {
           </div>
         </div>
 
-        {/* Note */}
-        <div className="text-center mt-8 text-xl text-xl text-white drop-shadow-md font-medium">
-          <p>Showing only the most recent 5 incomplete tasks</p>
-        </div>
+        <br />
+        <br />
+        <br />
+        <br />
 
         {/* Footer - fixed glass effect */}
         <footer className="fixed inset-x-0 bottom-0 z-50">

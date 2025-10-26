@@ -25,7 +25,12 @@ const TaskList = ({ tasks, onTaskComplete, onTaskDelete, loading, error }) => {
 
   return (
     <div className="glass-effect rounded-xl shadow-xl p-6">
-      <h2 className="text-2xl font-bold text-white mb-4 drop-shadow">Recent Tasks</h2>
+      <div className="mb-4">
+        <h2 className="text-2xl font-bold text-white drop-shadow">Recent Tasks</h2>
+        <p className="text-white text-opacity-90 text-sm mt-1 drop-shadow">
+          📋 Showing your 5 most recent incomplete tasks
+        </p>
+      </div>
       {tasks.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-white text-5xl mb-4">📝</div>
